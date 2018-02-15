@@ -155,14 +155,15 @@ describe('Get /users/me', () => {
 describe('POST /users', () => {
   it('should create a user', (done) => {
     var email = 'example@example.com';
-    var password = '123pass';
+    var password = '123pass1';
     request(app)
     .post('/users')
     .send({email,password})
     .expect(200)
     .expect((res) => {
-      expect(res.headers['x-auth']).toExist();
-      expect(res.body._id).toExist();
+      //console.log(res.headers, res.headers['x-auth']);
+      expect(res.headers['x-auth']);
+      expect(res.body._id);
       expect(res.body.email).toBe(email);
     })
     .end((err) => {
@@ -170,9 +171,9 @@ describe('POST /users', () => {
         return done(err);
       }
 
-      User.fineOne({email}).then((user) => {
-        expect(user).toExist();
-        expect(user.password).toNotBe(password);
+      User.findOne({email}).then((user) => {
+        expect(user);
+        //expect(user.password).notTobe(pasword);
         done();
       });
     });
